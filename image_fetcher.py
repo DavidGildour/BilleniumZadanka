@@ -1,5 +1,4 @@
 import requests
-import time
 import datetime
 
 from utils import cam_fetcher, convert_to_datetime, request_to_json
@@ -73,4 +72,3 @@ class ImageFetcher:
                     yield img_date, requests.get(img_url).content
 
             start = end
-
