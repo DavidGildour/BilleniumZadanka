@@ -1,6 +1,6 @@
 /venv
 .idea/
 /todays_imgs
+/last_month
 
 *.jpg
-geckodriver.log
