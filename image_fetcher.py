@@ -54,8 +54,8 @@ class ImageFetcher:
         #           I have all images necessary.
         while running:
             # range as in FROM later TO earlier, dates are in UnixTime
-            url = f'''http://api.deckchair.com/v1/camera/{self.cam_id}
-                      /images?from={unixtime_month_ago}&to={start.strftime("%s")}'''
+            url = (f'http://api.deckchair.com/v1/camera/{self.cam_id}'
+                   f'/images?from={unixtime_month_ago}&to={start.strftime("%s")}')
             cam_imgs = request_to_json(url)
 
             start = convert_to_datetime(cam_imgs[0]['taken'])
