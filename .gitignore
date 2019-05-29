@@ -1,6 +1,7 @@
-/venv
+venv/
 .idea/
-/todays_imgs
-/last_month
+todays_imgs/
+last_month/
+__pycache__/
 
 *.jpg
