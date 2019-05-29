@@ -5,6 +5,13 @@ import os
 from image_fetcher import ImageFetcher
 from sys import argv
 
+def print_usage():
+    print("Usage:   ./get_images.py URL                                                     [--flags]\n"
+          "Flags available:                                                                  --latest\n"
+          "                                                                                  --todays\n"
+          "                                                                                  --monthly\n"
+          "Example: ./get_images.py https://camera.deckchair.com/st-regis-le-morne-mauritius --latest")
+
 
 def main(camera: str, mode=None):
     fetcher = ImageFetcher(camera)
@@ -53,14 +60,13 @@ def main(camera: str, mode=None):
 
 if __name__ == '__main__':
     if len(argv) < 2:
-        print("Usage:   ./get_images.py URL                                                     [--flags]\n"
-              "Flags available:                                                                  --latest\n"
-              "                                                                                  --todays\n"
-              "                                                                                  --monthly\n"
-              "Example: ./get_images.py https://camera.deckchair.com/st-regis-le-morne-mauritius --latest")
+        print_usage()
     elif len(argv) == 2:
-        target_cam = argv[1].split('-')[-1].capitalize()
-        main(target_cam)
+        if argv[1].startswith(('http://', 'https://')):
+            target_cam = argv[1].split('-')[-1].capitalize()
+            main(target_cam)
+        else:
+            print_usage()
     else:
         target_cam = argv[1].split('-')[-1].capitalize()
         main(target_cam, argv[2])
