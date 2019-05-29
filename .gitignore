@@ -1,5 +1,6 @@
 /venv
 .idea/
+/todays_imgs
 
 *.jpg
 geckodriver.log
