@@ -12,12 +12,8 @@ class ImageFetcher:
             self.cam_name = self.cam['title']
             self.cam_id = self.cam['_id']
             # checking timezone difference
-            _, cam_date = self.fetch_latest()
-            cam_h = cam_date.hour
-            local_h = datetime.datetime.now().hour
-            tzdiff = datetime.timedelta(hours=(local_h - cam_h))
-            datetime.timezone(tzdiff)
-            print(f"Timezone diff: {tzdiff}.")
+            self.tzdiff = self.cam['location']['locale']
+            print(f"Timezone: {self.tzdiff}.")
         else:
             self.cam_found = False
 
@@ -26,13 +22,16 @@ class ImageFetcher:
 
         img_id = cam_imgs[0]['_id']
         img_date = cam_imgs[0]['taken']
+        print(datetime.datetime.now(), convert_to_datetime(img_date))
         url = f'http://api.deckchair.com/v1/viewer/image/{img_id}'
         return requests.get(url).content, convert_to_datetime(img_date)
 
     def fetch_todays(self):
-        today = datetime.date.today().strftime('%s')
+        today = datetime.date.today()
+        print(today)
+        url = f'http://api.deckchair.com/v1/camera/{self.cam_id}/images?from={today.strftime("%s")}'
 
-        cam_imgs = request_to_json(f'http://api.deckchair.com/v1/camera/{self.cam_id}/images?from={today}')
+        cam_imgs = request_to_json(url)
 
         for img in cam_imgs:
             # print(img['taken'])
