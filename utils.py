@@ -2,12 +2,17 @@ import datetime
 import requests
 import json
 
+from re import search
 
-def cam_fetcher(cam_name: str):
-    cams_raw = requests.get('http://api.deckchair.com/v1/cameras').content
-    cams_json = json.loads(cams_raw)['data']
 
-    for cam in cams_json:
+def cam_fetcher(cam_url: str):
+    cams = request_to_json('http://api.deckchair.com/v1/cameras')
+    html = requests.get(cam_url).text
+    exp = r'content="(.+) - HD Webcam"'
+
+    cam_name = search(exp, html).group(1)
+
+    for cam in cams:
         if cam_name in cam['title']:
             return cam
     return None

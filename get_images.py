@@ -5,6 +5,7 @@ import os
 from image_fetcher import ImageFetcher
 from sys import argv
 
+
 def print_usage():
     print("Usage:   ./get_images.py URL                                                     [--flags]\n"
           "Flags available:                                                                  --latest\n"
@@ -63,10 +64,8 @@ if __name__ == '__main__':
         print_usage()
     elif len(argv) == 2:
         if argv[1].startswith(('http://', 'https://')):
-            target_cam = argv[1].split('-')[-1].capitalize()
-            main(target_cam)
+            main(argv[1])
         else:
             print_usage()
     else:
-        target_cam = argv[1].split('-')[-1].capitalize()
-        main(target_cam, argv[2])
+        main(argv[1], argv[2])
